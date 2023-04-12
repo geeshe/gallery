@@ -21,8 +21,12 @@ pipeline {
         }
         
         stage('Deploy to Heroku') {
-            steps {
-                echo 'Deploying'
+            stage('Deploy to Heroku') {
+                steps {
+                    withCredentials([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS' )]){
+                    sh 'git push https://${HEROKU_CREDENTIALS}@git.heroku.com/pacific-reef-02933.git master'
+                    }
+                }
             }
         }
          
